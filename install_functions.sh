@@ -45,13 +45,13 @@ function install_java8() {
 #    GOSU_VERSION (e.g. 1.10)
 #
 ## Required packages:
-#    wget, gpg
+#    curl, gpg
 function get_gosu() {
-    wget -O /usr/local/bin/gosu https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-amd64
+    curl -sSL https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-amd64 -o /usr/local/bin/gosu 
     local GPG=$(type -p gpg)
     if [ -n "${GPG}" ]; then
-        wget -o /tmp/gosu.asc https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-amd64.asc
-        ${GPG} --keyservers pgp.mit.edu --recv-keys '0x036a9c25bf357dd4'
+        curl -sSL https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-amd64.asc -o /tmp/gosu.asc
+        ${GPG} --recv-keys '0x036a9c25bf357dd4'
         ${GPG} --verify /tmp/gosu.asc /usr/local/bin/gosu
     fi
     chmod a+x /usr/local/bin/gosu
@@ -83,6 +83,5 @@ function create_user_and_group() {
 function cleanup() {
     yum -y erase $@
     yum clean all
-    /bin/rm -rf /tmp/* 
+    /bin/rm -rf /tmp/* /var/cache/yum/*
 }
-
