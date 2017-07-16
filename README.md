@@ -19,5 +19,8 @@ Fetches and installs oracle java 8
 ### get_gosu
 Fetches and installs gosu
 
+### create_user_and_group
+Cretaes a user for running an application as unprivileged user
+
 ### cleanup
 Clean up /tmp and remove unneeded packages

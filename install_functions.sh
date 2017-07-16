@@ -21,15 +21,19 @@ function install_software() {
 #    that URL component, this can be set to "")
 #
 ## Required packages:
-#    wget, unzip
+#    curl, unzip
 function install_java8() {
     cd /tmp/
-    wget -O /tmp/jdk.rpm -k \
-        --header="Cookie: oraclelicense=accept-securebackup-cookie" \
-        "http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}-${JAVA_BUILD_NUMBER}/${JAVA_DL_PATH}jdk-${JAVA_VERSION}-linux-x64.rpm"
-    wget -O /tmp/jce_policy-8.zip -k \
-        --header="Cookie: oraclelicense=accept-securebackup-cookie" \
-        http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip
+    curl -jkLsS -H "Cookie: oraclelicense=accept-securebackup-cookie" \
+         "http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}-${JAVA_BUILD_NUMBER}/${JAVA_DL_PATH}jdk-${JAVA_VERSION}-linux-x64.rpm" \
+         -o /tmp/jdk.rpm
+    curl -jkLsS -H "Cookie: oraclelicense=accept-securebackup-cookie" \
+         http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip \
+         -o /tmp/jce_policy-8.zip
+    if [ -n "${JAVA_CHECKSUM}" ]; then
+        echo "${JAVA_CHECKSUM}  /tmp/jdk.rpm" >/tmp/jdk.rpm.sha256sum
+        sha256sum -c /tmp/jdk.rpm.sha256sum
+    fi
     yum -y install /tmp/jdk.rpm
     cd ${JAVA_HOME}/jre/lib/security
     unzip /tmp/jce_policy-8.zip
@@ -51,6 +55,24 @@ function get_gosu() {
         ${GPG} --verify /tmp/gosu.asc /usr/local/bin/gosu
     fi
     chmod a+x /usr/local/bin/gosu
+}
+
+# Create an application user
+#
+## Required environment variables:
+#    APP_USER (e.g. myapp)
+#    APP_UID (e.g. 20000)
+#    APP_GROUP ( e.g. mygroup)
+#    APP_GID (e.g. 20000)
+#    APP_HOME (e.g. /opt/myapp)
+
+function create_user_and_group() {
+    groupadd -g ${APP_GID} ${APP_GR>OUP}
+    useradd -c "Application user" -d ${APP_HOME} -g ${APP_GR>OUP} -m -s /bin/bash -u ${APP_UID} ${APP_USER}
+    if [ ! -d ${APP_HOME} ]; then
+        mkdir -p ${APP_HOME}
+    fi
+    chown -R ${APP_USER}:${APP_GROUP} ${APP_HOME}
 }
 
 # Generic cleanup function. This uninstalls software no longer needed and cleans
