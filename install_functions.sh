@@ -51,7 +51,7 @@ function get_gosu() {
     local GPG=$(type -p gpg)
     if [ -n "${GPG}" ]; then
         curl -sSL https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-amd64.asc -o /tmp/gosu.asc
-        ${GPG} --recv-keys '0x036a9c25bf357dd4'
+        ${GPG} --keyserver keys.gnupg.net --recv-keys '0x036a9c25bf357dd4'
         ${GPG} --verify /tmp/gosu.asc /usr/local/bin/gosu
     fi
     chmod a+x /usr/local/bin/gosu
