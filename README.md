@@ -4,10 +4,10 @@ This repository contains a set of shell functions to be used by various
 docker build scripts.
 
 ## Usage:
-
+```bash
 wget -O /tmp/install/functions.sh https://raw.githubusercontent.com/joernott/docker-oc-install-library/master/install_functions.sh
 source /tmp/install/functions.sh
-
+```
 ## Function Overview:
 
 ### install_software
