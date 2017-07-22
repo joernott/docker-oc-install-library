@@ -6,6 +6,7 @@ set -e
 ## Parameters:
 #    List of packages to install
 function install_software() {
+    sed -e 's/enabled=.*/enabled=0/' -i /etc/yum/pluginconf.d/fastestmirror.conf
     yum -y clean all
     yum -y update 
     yum -y install $@
