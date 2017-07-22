@@ -90,4 +90,5 @@ function cleanup() {
     fi
     yum clean all
     /bin/rm -rf /tmp/* /var/cache/yum/*
+    chmod 777 /tmp
 }
