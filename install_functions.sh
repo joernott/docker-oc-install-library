@@ -32,6 +32,9 @@ function install_java8() {
          -o /tmp/jce_policy-8.zip
     if [ -n "${JAVA_CHECKSUM}" ]; then
         echo "${JAVA_CHECKSUM}  /tmp/jdk.rpm" >/tmp/jdk.rpm.sha256sum
+        if [ -n "${JCE_CHECKSUM}" ]; then
+            echo "${JCE_CHECKSUM}  /tmp/jce_policy-8.zip" >>/tmp/jdk.rpm.sha256sum
+        fi
         sha256sum -c /tmp/jdk.rpm.sha256sum
     fi
     yum -y install /tmp/jdk.rpm
