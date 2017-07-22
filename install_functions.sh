@@ -85,7 +85,7 @@ function create_user_and_group() {
 ## Parameters:
 #    List of packages to uninstall
 function cleanup() {
-    if [ -n "$@" ]; then
+    if [ $# -ne 0 ]; then
         yum -y erase $@
     fi
     yum clean all
