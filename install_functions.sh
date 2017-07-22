@@ -85,7 +85,9 @@ function create_user_and_group() {
 ## Parameters:
 #    List of packages to uninstall
 function cleanup() {
-    yum -y erase $@
+    if [ -n "$@" ]; then
+        yum -y erase $@
+    fi
     yum clean all
     /bin/rm -rf /tmp/* /var/cache/yum/*
 }
