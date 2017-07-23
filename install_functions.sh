@@ -21,7 +21,8 @@ failovermethod=priorityenabled=1
 # default: gpgcheck=0
 gpgcheck=1
 # default: unsetpriority = 10
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7EOF
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+EOF
                 break
                 ;;
             docker)
@@ -33,6 +34,18 @@ baseurl=https://download.docker.com/linux/centos/7/$basearch/stable
 enabled=1
 gpgcheck=1
 gpgkey=https://download.docker.com/linux/centos/gpg
+EOF
+                break
+                ;;
+            graphviz)
+                rpm --import https://download.docker.com/linux/centos/gpg
+                cat >/etc/yum.repos.d/docker.repo <<EOF
+[graphviz-stable]
+name=Graphviz - RHEL $releasever - $basearch
+baseurl=http://www.graphviz.org/pub/graphviz/stable/redhat/el$releasever/$basearch/os/
+enabled=1
+gpgcheck=0
+skip_if_unavailable=1
 EOF
                 break
                 ;;
