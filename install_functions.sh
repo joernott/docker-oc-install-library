@@ -1,6 +1,45 @@
 #!/bin/bash
 set -e
 
+# Setup repository file in /etc/yum.repos.d
+#
+## Parameters:
+# List of repos to enable
+function add_repos() {
+    local REPO=""
+    for REPO in $@; do
+        case "${REPO}" in
+            EPEL)
+                rpm --import https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
+                cat >/etc/yum.repos.d/epel.repo <<EOF
+[epel]
+name=Extra Packages for Enterprise Linux 7 - $basearch
+#baseurl=http://download.fedoraproject.org/pub/epel/7/$basearch
+mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch
+failovermethod=priorityenabled=1
+# Django : 2014-08-14
+# default: gpgcheck=0
+gpgcheck=1
+# default: unsetpriority = 10
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7EOF
+                break
+                ;;
+            docker)
+                rpm --import https://download.docker.com/linux/centos/gpg
+                cat >/etc/yum.repos.d/docker.repo <<EOF
+[docker-ce-stable]
+name=Docker CE Stable - $basearch
+baseurl=https://download.docker.com/linux/centos/7/$basearch/stable
+enabled=1
+gpgcheck=1
+gpgkey=https://download.docker.com/linux/centos/gpg
+EOF
+                break
+                ;;
+        esac
+    done
+}
+
 # Generic software installation routine
 #
 ## Parameters:
@@ -8,8 +47,8 @@ set -e
 function install_software() {
     sed -e 's/enabled=.*/enabled=0/' -i /etc/yum/pluginconf.d/fastestmirror.conf
     yum -y clean all
-    yum -y update 
-    yum -y install $@
+    yum -y --disableplugin=fastestmirror update 
+    yum -y --disableplugin=fastestmirror install $@
 }
 
 # Install oracle java 8 based on environment variables
@@ -92,3 +131,45 @@ function cleanup() {
     /bin/rm -rf /tmp/* /var/cache/yum/*
     chmod 777 /tmp
 }
+
+# Set proxy for yum
+#
+## Environment variables:
+# http_proxy or https_proxy, optional proxy_username and proxy_password
+#
+function set_yum_proxy() {
+    if [ -n "${https_proxy}" ]; then
+        local PROXY="${https_proxy}"
+    else
+        if [ -n "${http_proxy}" ]; then
+            local PROXY="${http_proxy}"
+        fi
+    fi
+    set +e
+    if [ -n "${proxy}" ]; then
+        grep -e "^proxy=" /etc/yum.conf &>/dev/null
+        if [ $? -eq 0 ]; then
+            sed -e "s/^proxy=.*$/proxy=${proxy}" -i /etc/yum.conf
+        else
+            echo "proxy=${proxy}" >>/etc/yum.conf
+        fi
+    fi
+    if [ -n "${proxy_user}" ]; then
+        grep -e "^proxy_username=" /etc/yum.conf &>/dev/null
+        if [ $? -eq 0 ]; then
+            sed -e "s/^proxy_username=.*$/proxy_username=${proxy__username}" -i /etc/yum.conf
+        else
+            echo "proxy_username=${proxy_username}" >>/etc/yum.conf
+        fi
+    fi
+    if [ -n "${proxy_password}" ]; then
+        grep -e "^proxy_password=" /etc/yum.conf &>/dev/null
+        if [ $? -eq 0 ]; then
+            sed -e "s/^proxy_password=.*$/proxy_password=${proxy_password}" -i /etc/yum.conf
+        else
+            echo "proxy_password=${proxy_password}" >>/etc/yum.conf
+        fi
+    fi
+    set -e
+}
+
