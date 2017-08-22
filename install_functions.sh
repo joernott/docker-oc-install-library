@@ -15,7 +15,7 @@ function add_repos() {
 [epel]
 name=Extra Packages for Enterprise Linux 7 - $basearch
 #baseurl=http://download.fedoraproject.org/pub/epel/7/$basearch
-mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch
+mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=\$basearch
 failovermethod=priorityenabled=1
 # Django : 2014-08-14
 # default: gpgcheck=0
@@ -29,7 +29,7 @@ EOF
                 cat >/etc/yum.repos.d/docker.repo <<EOF
 [docker-ce-stable]
 name=Docker CE Stable - $basearch
-baseurl=https://download.docker.com/linux/centos/7/$basearch/stable
+baseurl=https://download.docker.com/linux/centos/7/\$basearch/stable
 enabled=1
 gpgcheck=1
 gpgkey=https://download.docker.com/linux/centos/gpg
@@ -40,7 +40,7 @@ EOF
                 cat >/etc/yum.repos.d/graphviz.repo <<EOF
 [graphviz-stable]
 name=Graphviz - RHEL $releasever - $basearch
-baseurl=http://www.graphviz.org/pub/graphviz/stable/redhat/el$releasever/$basearch/os/
+baseurl=http://www.graphviz.org/pub/graphviz/stable/redhat/el$releasever/\$basearch/os/
 enabled=1
 gpgcheck=0
 skip_if_unavailable=1
@@ -51,8 +51,8 @@ EOF
                 cat >/etc/yum.repos.d/ius.repo <<EOF
 [ius]
 name=IUS Community Packages for Enterprise Linux 7 - $basearch
-baseurl=https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/$basearch
-#mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos7&arch=$basearch&protocol=http
+#baseurl=https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/\$basearch
+mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos7&arch=\$basearch&protocol=http
 failovermethod=priority
 enabled=1
 gpgcheck=1
