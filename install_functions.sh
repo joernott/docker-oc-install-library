@@ -23,7 +23,6 @@ gpgcheck=1
 # default: unsetpriority = 10
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
 EOF
-                break
                 ;;
             docker)
                 rpm --import https://download.docker.com/linux/centos/gpg
@@ -35,7 +34,6 @@ enabled=1
 gpgcheck=1
 gpgkey=https://download.docker.com/linux/centos/gpg
 EOF
-                break
                 ;;
             graphviz)
                 rpm --import https://download.docker.com/linux/centos/gpg
@@ -47,21 +45,19 @@ enabled=1
 gpgcheck=0
 skip_if_unavailable=1
 EOF
-                break
                 ;;
             IUS)
                 rpm --import https://dl.iuscommunity.org/pub/ius/IUS-COMMUNITY-GPG-KEY
                 cat >/etc/yum.repos.d/ius.repo <<EOF
 [ius]
 name=IUS Community Packages for Enterprise Linux 7 - $basearch
-#baseurl=https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/$basearch
-mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos7&arch=$basearch&protocol=http
+baseurl=https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/$basearch
+#mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos7&arch=$basearch&protocol=http
 failovermethod=priority
 enabled=1
 gpgcheck=1
 gpgkey=https://dl.iuscommunity.org/pub/ius/IUS-COMMUNITY-GPG-KEY
 EOF
-                break
                 ;;
         esac
     done
