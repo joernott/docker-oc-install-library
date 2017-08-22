@@ -39,13 +39,27 @@ EOF
                 ;;
             graphviz)
                 rpm --import https://download.docker.com/linux/centos/gpg
-                cat >/etc/yum.repos.d/docker.repo <<EOF
+                cat >/etc/yum.repos.d/graphviz.repo <<EOF
 [graphviz-stable]
 name=Graphviz - RHEL $releasever - $basearch
 baseurl=http://www.graphviz.org/pub/graphviz/stable/redhat/el$releasever/$basearch/os/
 enabled=1
 gpgcheck=0
 skip_if_unavailable=1
+EOF
+                break
+                ;;
+            IUS)
+                rpm --import https://dl.iuscommunity.org/pub/ius/IUS-COMMUNITY-GPG-KEY
+                cat >/etc/yum.repos.d/ius.repo <<EOF
+[ius]
+name=IUS Community Packages for Enterprise Linux 7 - $basearch
+#baseurl=https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/$basearch
+mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos7&arch=$basearch&protocol=http
+failovermethod=priority
+enabled=1
+gpgcheck=1
+gpgkey=https://dl.iuscommunity.org/pub/ius/IUS-COMMUNITY-GPG-KEY
 EOF
                 break
                 ;;
