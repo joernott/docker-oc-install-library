@@ -151,6 +151,7 @@ function cleanup() {
         yum -y erase $@
     fi
     yum clean all
+    set +e
     /bin/rm -rf /tmp/* /var/cache/yum/*
     chmod 777 /tmp
 }
