@@ -36,11 +36,20 @@ gpgkey=https://download.docker.com/linux/centos/gpg
 EOF
                 ;;
             graphviz)
-                rpm --import https://download.docker.com/linux/centos/gpg
                 cat >/etc/yum.repos.d/graphviz.repo <<EOF
 [graphviz-stable]
 name=Graphviz - RHEL $releasever - $basearch
 baseurl=http://www.graphviz.org/pub/graphviz/stable/redhat/el\$releasever/\$basearch/os/
+enabled=1
+gpgcheck=0
+skip_if_unavailable=1
+EOF
+                ;;
+            graphviz-DEVELOPMENT)
+                cat >/etc/yum.repos.d/graphviz-DEVELOPMENT.repo <<EOF
+[graphviz-development]
+name=Graphviz - RHEL $releasever - $basearch
+baseurl=http://www.graphviz.org/pub/graphviz/development/redhat/el\$releasever/\$basearch/os/
 enabled=1
 gpgcheck=0
 skip_if_unavailable=1
