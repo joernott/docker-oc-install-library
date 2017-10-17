@@ -45,9 +45,9 @@ gpgcheck=0
 skip_if_unavailable=1
 EOF
                 ;;
-            graphviz-DEVELOPMENT)
-                cat >/etc/yum.repos.d/graphviz-DEVELOPMENT.repo <<EOF
-[graphviz-development]
+            graphviz-development)
+                cat >/etc/yum.repos.d/graphviz-development.repo <<EOF
+[graphviz-stable]
 name=Graphviz - RHEL $releasever - $basearch
 baseurl=http://www.graphviz.org/pub/graphviz/development/redhat/el\$releasever/\$basearch/os/
 enabled=1
