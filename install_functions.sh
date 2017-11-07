@@ -68,6 +68,9 @@ gpgcheck=1
 gpgkey=https://dl.iuscommunity.org/pub/ius/IUS-COMMUNITY-GPG-KEY
 EOF
                 ;;
+            nodejs)
+                yum -y install https://rpm.nodesource.com/pub/8.x/el/7/x86_64/nodesource-release-el7-1.noarch.rpm
+                ;;
         esac
     done
 }
