@@ -162,6 +162,7 @@ function cleanup() {
     if [ $# -ne 0 ]; then
         yum -y erase $@
     fi
+    yum autoremove
     yum clean all
     set +e
     /bin/rm -rf /tmp/* /var/cache/yum/*
