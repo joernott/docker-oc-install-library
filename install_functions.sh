@@ -71,6 +71,32 @@ EOF
             nodejs)
                 yum -y install https://rpm.nodesource.com/pub_8.x/el/7/x86_64/nodesource-release-el7-1.noarch.rpm
                 ;;
+            elasticsearch5)
+                rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+                cat >/etc/yum.repos.d/elasticsearch5.repo <<EOF
+[elasticsearch-5.x]
+name=Elasticsearch repository for 5.x packages
+baseurl=https://artifacts.elastic.co/packages/6.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md
+EOF
+                ;;
+            elasticsearch6)
+                rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+                cat >/etc/yum.repos.d/elasticsearch6.repo <<EOF
+[elasticsearch-6.x]
+name=Elasticsearch repository for 6.x packages
+baseurl=https://artifacts.elastic.co/packages/6.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md
+EOF
+                ;;
         esac
     done
 }
