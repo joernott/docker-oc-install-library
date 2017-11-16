@@ -76,7 +76,7 @@ EOF
                 cat >/etc/yum.repos.d/elasticsearch5.repo <<EOF
 [elasticsearch-5.x]
 name=Elasticsearch repository for 5.x packages
-baseurl=https://artifacts.elastic.co/packages/6.x/yum
+baseurl=https://artifacts.elastic.co/packages/5.x/yum
 gpgcheck=1
 gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
 enabled=1
@@ -188,7 +188,7 @@ function cleanup() {
     if [ $# -ne 0 ]; then
         yum -y erase $@
     fi
-    yum autoremove
+    yum -y autoremove
     yum clean all
     set +e
     /bin/rm -rf /tmp/* /var/cache/yum/*
