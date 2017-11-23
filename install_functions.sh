@@ -143,6 +143,26 @@ function install_java8() {
     unzip /tmp/jce_policy-8.zip
 }
 
+# Install oracle java 9 based on environment variables
+#
+## Required environment:
+#    JAVA_VERSION (e.g. 9.0.1), JAVA_BUILD_NUMBER /e.g. 11)
+#    JAVA_HOME (e.g./usr/java/jdk1.9.0_131) 
+#
+## Required packages:
+#    curl, unzip
+function install_java9() {
+    cd /tmp/
+    curl -jkLsS -H "Cookie: oraclelicense=accept-securebackup-cookie" \
+         "http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}+${JAVA_BUILD_NUMBER}/jdk-${JAVA_VERSION}_linux-x64_bin.rpm" \
+         -o /tmp/jdk.rpm
+    if [ -n "${JAVA_CHECKSUM}" ]; then
+        echo "${JAVA_CHECKSUM}  /tmp/jdk.rpm" >/tmp/jdk.rpm.sha256sum
+        sha256sum -c /tmp/jdk.rpm.sha256sum
+    fi
+    yum -y install /tmp/jdk.rpm
+}
+
 # Get the sudo alternative gosu and install it to /usr/local/bin
 #
 ## Required environment variables:
