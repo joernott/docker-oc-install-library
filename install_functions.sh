@@ -211,7 +211,8 @@ function cleanup() {
     yum -y autoremove
     yum clean all
     set +e
-    /bin/rm -rf /tmp/* /var/cache/yum/*
+    /bin/rm -rf /var/cache/yum/*
+    /bin/rm /tmp/*
     chmod 777 /tmp
 }
 
