@@ -260,13 +260,17 @@ function set_yum_proxy() {
 
 # Patch Dockerfile
 function patch_dockerfile() {
+    local DF=${1}
+    if [ -z "${DF}" ]; then
+        DF="Dockerfile"
+    fi
     if [ -z "${PARENT_HISTORY}" ]; then
-        local FROM=$(grep "FROM" Dockerfile|sed -e 's/FROM\s*//')
+        local FROM=$(grep "FROM" ${DF}|sed -e 's/FROM\s*//')
         docker pull ${FROM}
         local PARENTENV=$(docker run -rm --entrypoint=/bin/bash ${FROM} -c export)
         PARENT_HISTORY=$(echo ${PARENTENV}|grep "IMAGE_HISTORY"|sed -e 's/.*IMAGE_HISTORY=//' -e 's/"//g')
     fi
     sed -e "s,GIT_COMMIT=.*\",GIT_COMMIT=\"${GIT_COMMIT}\"," \
         -e "s,IMAGE_HISTORY=.*\",IMAGE_HISTORY=\"${BUILD_TAG} « ${PARENT_HISTORY}\"," \
-        -i Dockerfile
+        -i ${DF}
 }
