@@ -264,7 +264,7 @@ function patch_dockerfile() {
         local FROM=$(grep "FROM" Dockerfile|sed -e 's/FROM\s*//')
         docker pull ${FROM}
         local PARENTENV=$(docker run -rm --entrypoint=/bin/bash ${FROM} -c export)
-        PARENT_HISTORY=$(echo ${PARENTENV}|grep "IMAGE_HISTORY"|sed-e 's/.*IMAGE_HISTORY=//' -e 's/"//g')
+        PARENT_HISTORY=$(echo ${PARENTENV}|grep "IMAGE_HISTORY"|sed -e 's/.*IMAGE_HISTORY=//' -e 's/"//g')
     fi
     sed -e "s/GIT_COMMIT=.*/GIT_COMMIT=${GIT_COMMIT} \\/" \
         -e "s/IMAGE_HISTORY=.*\"/IMAGE_HISTORY=\"${BUILD_TAG} « ${PARENT_HISTORY} \"/" \
