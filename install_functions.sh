@@ -154,7 +154,7 @@ function install_java8() {
 function install_java9() {
     cd /tmp/
     curl -jkLsS -H "Cookie: oraclelicense=accept-securebackup-cookie" \
-         "http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}+${JAVA_BUILD_NUMBER}/jdk-${JAVA_VERSION}_linux-x64_bin.rpm" \
+         "http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}+${JAVA_BUILD_NUMBER}/${JAVA_DL_PATH}/jdk-${JAVA_VERSION}_linux-x64_bin.rpm" \
          -o /tmp/jdk.rpm
     if [ -n "${JAVA_CHECKSUM}" ]; then
         echo "${JAVA_CHECKSUM}  /tmp/jdk.rpm" >/tmp/jdk.rpm.sha256sum
