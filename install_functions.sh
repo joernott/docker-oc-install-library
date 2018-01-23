@@ -191,7 +191,13 @@ function get_gosu() {
 #    APP_HOME (e.g. /opt/myapp)
 
 function create_user_and_group() {
-    groupadd -g ${APP_GID} ${APP_GROUP}
+    set +e
+    grep "${APP_GROUP}:x:${APP_GID}:" /etc/group &>/dev/null
+    RESULT=$?
+    set -e
+    if [ $RESULT -ne 0 ]; then
+        groupadd -g ${APP_GID} ${APP_GROUP}
+    fi
     useradd -c "Application user" -d ${APP_HOME} -g ${APP_GROUP} -m -s /bin/bash -u ${APP_UID} ${APP_USER}
     if [ ! -d ${APP_HOME} ]; then
         mkdir -p ${APP_HOME}
