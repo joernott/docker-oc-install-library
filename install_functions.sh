@@ -97,6 +97,18 @@ autorefresh=1
 type=rpm-md
 EOF
                 ;;
+            bareos)
+                rpm --import http://download.bareos.org/bareos/release/17.2/CentOS_7/repodata/repomd.xml.key
+                cat >/etc/yum.repos.d/bareos.repo <<EOF
+[bareos]
+name=Bareos EL7 - \$basearch
+baseurl=http://download.bareos.org/bareos/release/17.2/CentOS_7/
+enabled=1
+gpgcheck=1
+gpgkey=http://download.bareos.org/bareos/release/17.2/CentOS_7/repodata/repomd.xml.key
+failovermethod=priority
+EOF
+                ;;
         esac
     done
 }
