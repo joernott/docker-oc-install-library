@@ -206,7 +206,6 @@ function create_user_and_group() {
     set +e
     grep "${APP_GROUP}:x:${APP_GID}:" /etc/group &>/dev/null
     RESULT=$?
-    set -e
     if [ $RESULT -ne 0 ]; then
         groupadd -g ${APP_GID} ${APP_GROUP}
     fi
@@ -214,6 +213,7 @@ function create_user_and_group() {
     if [ $RESULT -ne 0 ]; then
         useradd -c "Application user" -d ${APP_HOME} -g ${APP_GROUP} -m -s /bin/bash -u ${APP_UID} ${APP_USER}
     fi
+    set -e
     if [ ! -d ${APP_HOME} ]; then
         mkdir -p ${APP_HOME}
     fi
