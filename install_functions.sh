@@ -97,6 +97,18 @@ autorefresh=1
 type=rpm-md
 EOF
                 ;;
+            elasticsearch7)
+                rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+                cat >/etc/yum.repos.d/elasticsearch7.repo <<EOF
+[elasticsearch-7.x]
+name=Elasticsearch repository for 7.x packages
+baseurl=https://artifacts.elastic.co/packages/7.x-prerelease/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md
+EOF
             bareos)
                 rpm --import http://download.bareos.org/bareos/release/17.2/CentOS_7/repodata/repomd.xml.key
                 cat >/etc/yum.repos.d/bareos.repo <<EOF
