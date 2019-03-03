@@ -109,6 +109,7 @@ enabled=1
 autorefresh=1
 type=rpm-md
 EOF
+                ;;
             bareos)
                 rpm --import http://download.bareos.org/bareos/release/17.2/CentOS_7/repodata/repomd.xml.key
                 cat >/etc/yum.repos.d/bareos.repo <<EOF
