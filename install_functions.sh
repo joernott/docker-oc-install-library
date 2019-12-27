@@ -59,13 +59,12 @@ EOF
                 rpm --import https://dl.iuscommunity.org/pub/ius/IUS-COMMUNITY-GPG-KEY
                 cat >/etc/yum.repos.d/ius.repo <<EOF
 [ius]
-name=IUS Community Packages for Enterprise Linux 7 - $basearch
-#baseurl=https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/\$basearch
-mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos7&arch=\$basearch&protocol=http
-failovermethod=priority
-enabled=1
-gpgcheck=1
-gpgkey=https://dl.iuscommunity.org/pub/ius/IUS-COMMUNITY-GPG-KEY
+name = IUS for Enterprise Linux 7 - $basearch
+baseurl = https://repo.ius.io/7/$basearch/
+enabled = 1
+repo_gpgcheck = 0
+gpgcheck = 1
+gpgkey = https://repo.ius.io/RPM-GPG-KEY-IUS-7
 EOF
                 ;;
             nodejs)
