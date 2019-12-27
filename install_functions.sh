@@ -56,7 +56,7 @@ skip_if_unavailable=1
 EOF
                 ;;
             IUS)
-                rpm --import https://dl.iuscommunity.org/pub/ius/IUS-COMMUNITY-GPG-KEY
+                rpm --import https://repo.ius.io/RPM-GPG-KEY-IUS-7
                 cat >/etc/yum.repos.d/ius.repo <<EOF
 [ius]
 name = IUS for Enterprise Linux 7 - $basearch
