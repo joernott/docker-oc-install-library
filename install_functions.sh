@@ -60,7 +60,7 @@ EOF
                 cat >/etc/yum.repos.d/ius.repo <<EOF
 [ius]
 name = IUS for Enterprise Linux 7 - $basearch
-baseurl = https://repo.ius.io/7/$basearch/
+baseurl = https://repo.ius.io/7/\$basearch/
 enabled = 1
 repo_gpgcheck = 0
 gpgcheck = 1
