@@ -68,7 +68,7 @@ gpgkey = https://repo.ius.io/RPM-GPG-KEY-IUS-7
 EOF
                 ;;
             nodejs)
-                yum -y install https://rpm.nodesource.com/pub_8.x/el/7/x86_64/nodesource-release-el7-1.noarch.rpm
+                yum -y install https://rpm.nodesource.com/pub_12.x/el/7/x86_64/nodesource-release-el7-1.noarch.rpm
                 ;;
             elasticsearch5)
                 rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
